@@ -1,36 +1,112 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+# React-NextAuth Template
 
-First, run the development server:
+## Description
+
+This project is a **template** for integrating **NextAuth.ts** with a **React** application. It provides a quick setup for authentication in a React app using NextAuth to manage authentication with various providers (Google, Facebook, GitHub, etc.).
+
+### Objectives:
+- Provide a ready-to-use configuration for authentication with NextAuth in a React app.
+- Enable developers to reuse this template in new React projects requiring authentication.
+- Handle sessions, redirection, and page protection with user sessions.
+
+## Prerequisites
+
+Before you begin, make sure you have the following installed on your machine:
+
+- **Node.js** (version 14 or later): [Download Node.js](https://nodejs.org/)
+- **npm** (comes with Node.js) or **yarn**: [Download Yarn](https://yarnpkg.com/)
+- A GitHub, Google, or other authentication provider account you wish to use with **NextAuth**.
+
+## Installation
+
+### 1. Clone the repository
+
+Clone this repository to your local machine using the following command:
+
+```bash
+git clone https://github.com/Logipek/React-NextAuth-Template.git
+```
+
+### 2. Install dependencies
+
+Navigate to the project directory and install the dependencies using npm or yarn.
+
+```bash
+cd React-NextAuth-Template
+npm install
+```
+
+or if you are using yarn:
+
+```bash
+yarn install
+```
+
+### 3. Set up environment variables
+
+Before using authentication, you'll need to set up the required environment variables for **NextAuth.ts**. Create a `.env.local` file at the root of your project and add the following variables:
+
+```bash
+# Example for Google OAuth
+GOOGLE_CLIENT_ID=<your-google-client-id>
+GOOGLE_CLIENT_SECRET=<your-google-client-secret>
+
+# Example for GitHub OAuth
+GITHUB_CLIENT_ID=<your-github-client-id>
+GITHUB_CLIENT_SECRET=<your-github-client-secret>
+```
+
+**Note:** Replace `<your-nextauth-secret>`, `<your-google-client-id>`, `<your-google-client-secret>`, and other sensitive details with your own API keys, which you can obtain from authentication providers like Google, GitHub, etc.
+
+### 4. Start the app in development mode
+
+Run the following command to start the app in development mode:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+or if you're using yarn:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+yarn dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+This will start the development server, and you can access the app at: [http://localhost:3000](http://localhost:3000).
 
-## Learn More
+### 5. Set up protected pages
 
-To learn more about Next.js, take a look at the following resources:
+Pages that require authentication can easily be protected using `useSession` from NextAuth. For example:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```jsx
+    {session && (
+        <div className="flex flex-col items-center justify-center">
+            <p className="text-center mt-4 text-2xl font-bold text-blue-500">{session?.user?.name}</p>
+            <p className="text-center mt-4 text-2xl font-bold text-blue-500">{session?.user?.email}</p>
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+            <img src={session?.user?.image || ""} alt="Profile" width={100} height={100} className="rounded-full" />
+        </div>
+    )}
+```
 
-## Deploy on Vercel
+## Project Structure
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- `pages/api/auth/[...nextauth]/route.ts`: NextAuth API configuration to handle authentication strategies.
+- `pages/page.tsx`: The homepage of the application.
+- `lib/AuthOptions.ts`: File for additional NextAuth-related logic.
+- `styles/`: Folder containing CSS files for the interface.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Contribution
+
+Contributions are welcome! If you have improvements or bug fixes, feel free to submit a pull request.
+
+### How to contribute:
+1. Fork this repository.
+2. Create a new branch for your changes.
+3. Make your changes and commit them.
+4. Push your branch and submit a pull request.
+
+## License
+
+This project is licensed under the [MIT](https://opensource.org/licenses/MIT) License.
